@@ -143,7 +143,10 @@ export default function QuizResult() {
         totalQuestions: answersHistory.length,
         completedAt: serverTimestamp(),
         timeTaken: Number(stats.timeTaken || 0),
-        attemptNumber
+        attemptNumber,
+        violationCount: Number(stats.violationCount || 0),
+        autoSubmitted: Boolean(stats.autoSubmitted || false),
+        submissionReason: stats.submissionReason || null
       };
       await addDoc(historyColRef, attemptData);
 
@@ -207,6 +210,21 @@ export default function QuizResult() {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.4 }}
     >
+      {/* Auto-Submitted Anti-Cheat violation banner */}
+      {stats.autoSubmitted && (
+        <section className="p-5 rounded-3xl bg-rose-50 border border-rose-200 text-rose-800 dark:bg-rose-950/20 dark:border-rose-900/40 dark:text-rose-400 flex items-start gap-4 shadow-sm">
+          <AlertCircle className="w-6 h-6 text-rose-500 flex-shrink-0 mt-0.5" />
+          <div>
+            <h4 className="text-xs font-black uppercase tracking-wider">
+              Quiz Auto-Submitted due to Security Violations
+            </h4>
+            <p className="text-[11px] mt-1 leading-relaxed text-rose-700 dark:text-rose-400/80">
+              This attempt was terminated because the anti-cheating system detected a security violation: <strong>{stats.submissionReason}</strong>. Leaving fullscreen, switching tabs, or resizing developer consoles multiple times forces an automatic run submission.
+            </p>
+          </div>
+        </section>
+      )}
+
       {/* Score Summary Box */}
       <section className="glass rounded-3xl overflow-hidden shadow-lg border border-slate-200/50 dark:border-slate-800/40">
         <div className={`p-6 sm:p-10 bg-gradient-to-br ${feedback.color} text-white text-center relative overflow-hidden`}>

@@ -1,9 +1,15 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { fetchQuizById } from '../firebase/quizzes';
 import ProgressBar from '../components/ProgressBar';
 import CountdownTimer from '../components/CountdownTimer';
-import { ArrowLeft, Play, ArrowRight, HelpCircle, BookOpen, AlertTriangle, Loader2 } from 'lucide-react';
+import SecureQuizWarning from '../components/SecureQuizWarning';
+import { useSecureQuiz } from '../hooks/useSecureQuiz';
+import { secureQuizService } from '../services/secureQuizService';
+import { 
+  ArrowLeft, Play, ArrowRight, HelpCircle, BookOpen, AlertTriangle, 
+  Loader2, Shield, Lock, Info 
+} from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function QuizPlay() {
@@ -20,7 +26,18 @@ export default function QuizPlay() {
   const [answersHistory, setAnswersHistory] = useState([]);
   const [startTime, setStartTime] = useState(null);
 
-  // Fetch quiz by ID from Firestore
+  // Proctoring States
+  const [isProctorActive, setIsProctorActive] = useState(false);
+  const [isWarningOpen, setIsWarningOpen] = useState(false);
+  const [activeViolationReason, setActiveViolationReason] = useState(null);
+
+  // Ref to get latest answers history inside callbacks
+  const answersHistoryRef = useRef([]);
+  useEffect(() => {
+    answersHistoryRef.current = answersHistory;
+  }, [answersHistory]);
+
+  // Fetch quiz details from database
   useEffect(() => {
     let active = true;
     const getQuiz = async () => {
@@ -51,11 +68,93 @@ export default function QuizPlay() {
   const currentQuestion = quiz?.questions?.[currentQuestionIndex];
   const isLastQuestion = quiz ? currentQuestionIndex === quiz.questions.length - 1 : false;
 
+  // Auto Submission logic
+  const handleAutoSubmit = useCallback((reason) => {
+    if (!quiz) return;
+    setIsProctorActive(false);
+    setIsWarningOpen(false);
+
+    // Calculate score for completed answers
+    const currentHistory = answersHistoryRef.current;
+    const correctCount = currentHistory.filter(h => h.isCorrect).length;
+    const wrongCount = quiz.questions.length - correctCount;
+    const score = currentHistory.reduce((acc, h) => acc + h.pointsEarned, 0);
+    const percentage = Math.round((correctCount / quiz.questions.length) * 100);
+    const durationSeconds = startTime ? Math.round((Date.now() - startTime) / 1000) : 0;
+
+    // Exit browser fullscreen safely
+    secureQuizService.exitFullscreen();
+
+    // Map computer codes to user-friendly text
+    const getSubmitReasonText = (code) => {
+      if (code === 'fullscreen_exit') return 'Fullscreen Exited multiple times';
+      if (code === 'tab_switch') return 'Tab switched during quiz';
+      if (code === 'window_blur') return 'Window focus lost (blur)';
+      if (code === 'devtools_attempt' || code === 'devtools_docked') return 'Developer Tools opened';
+      return 'Multiple security violations';
+    };
+
+    // Navigate to results page with auto-submit flags
+    navigate(`/quiz/${quiz.id}/result`, {
+      state: {
+        quizId: quiz.id,
+        quizTitle: quiz.title,
+        quizCategory: quiz.category || 'Programming',
+        score,
+        correctCount,
+        wrongCount,
+        percentage,
+        answersHistory: currentHistory,
+        timeTaken: durationSeconds,
+        autoSubmitted: true,
+        submissionReason: getSubmitReasonText(reason),
+        violationCount: 3
+      },
+      replace: true
+    });
+  }, [quiz, startTime, navigate]);
+
+  // Hook up anti-cheating monitors
+  const { violationCount, warningsRemaining } = useSecureQuiz({
+    active: isProctorActive,
+    onViolation: (reason, remaining) => {
+      // Pause proctor checks temporarily to let them resolve dialog
+      setIsProctorActive(false);
+      setActiveViolationReason(reason);
+      setIsWarningOpen(true);
+    },
+    onAutoSubmit: handleAutoSubmit
+  });
+
+  // Action to request fullscreen and start monitors
+  const handleStartQuiz = async () => {
+    setGameState('playing');
+    setStartTime(Date.now());
+    
+    // Request fullscreen on root element
+    await secureQuizService.enterFullscreen(document.documentElement);
+    setIsProctorActive(true);
+  };
+
+  // Action to resume after warning alert is closed
+  const handleResumeQuiz = async () => {
+    setIsWarningOpen(false);
+    // Request fullscreen re-entry
+    await secureQuizService.enterFullscreen(document.documentElement);
+    setIsProctorActive(true);
+  };
+
+  // Clean up fullscreen on leaving page
+  useEffect(() => {
+    return () => {
+      secureQuizService.exitFullscreen();
+    };
+  }, []);
+
   // Handles movement to next question or completion
   const handleNext = useCallback((forcedAnswerValue = undefined) => {
     if (!quiz || !currentQuestion) return;
 
-    // If forcedAnswerValue is provided (e.g., null when timer expires), use it, otherwise use selectedOption
     const chosenAnswer = forcedAnswerValue !== undefined ? forcedAnswerValue : selectedOption;
     
     // Save to answers history
@@ -75,16 +174,15 @@ export default function QuizPlay() {
     setAnswersHistory(updatedHistory);
 
     if (isLastQuestion) {
-      // Calculate final statistics
+      setIsProctorActive(false); // Disable proctoring on completion
+      secureQuizService.exitFullscreen();
+
       const correctCount = updatedHistory.filter(h => h.isCorrect).length;
       const wrongCount = quiz.questions.length - correctCount;
       const score = updatedHistory.reduce((acc, h) => acc + h.pointsEarned, 0);
       const percentage = Math.round((correctCount / quiz.questions.length) * 100);
-      
-      // Calculate time taken
       const durationSeconds = startTime ? Math.round((Date.now() - startTime) / 1000) : 0;
 
-      // Navigate to results page, passing game metrics in state
       navigate(`/quiz/${quiz.id}/result`, {
         state: {
           quizId: quiz.id,
@@ -95,20 +193,22 @@ export default function QuizPlay() {
           wrongCount,
           percentage,
           answersHistory: updatedHistory,
-          timeTaken: durationSeconds
+          timeTaken: durationSeconds,
+          autoSubmitted: false,
+          submissionReason: null,
+          violationCount
         },
-        replace: true // Prevent user from backing into active quiz play state
+        replace: true
       });
     } else {
-      // Go to next question
       setCurrentQuestionIndex((prev) => prev + 1);
       setSelectedOption(null); // Reset selection
     }
-  }, [currentQuestionIndex, selectedOption, answersHistory, isLastQuestion, quiz, currentQuestion, startTime, navigate]);
+  }, [currentQuestionIndex, selectedOption, answersHistory, isLastQuestion, quiz, currentQuestion, startTime, navigate, violationCount]);
 
   // Handle timer running out
   const handleTimeUp = useCallback(() => {
-    handleNext(null); // Advance with a null answer (timed out)
+    handleNext(null); // Skip with incorrect answer
   }, [handleNext]);
 
   // Loading Screen
@@ -123,7 +223,7 @@ export default function QuizPlay() {
     );
   }
 
-  // Render error if quiz doesn't exist or loading failed
+  // Render error if quiz doesn't exist
   if (error || !quiz) {
     return (
       <div className="max-w-md mx-auto px-4 py-16 text-center">
@@ -145,14 +245,13 @@ export default function QuizPlay() {
     );
   }
 
-  // Page entry variants
+  // Transitions
   const pageVariants = {
     hidden: { opacity: 0, scale: 0.98 },
     visible: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
     exit: { opacity: 0, scale: 0.98, transition: { duration: 0.2 } }
   };
 
-  // Question transitions (slide in/out)
   const questionVariants = {
     initial: { x: 50, opacity: 0 },
     animate: { x: 0, opacity: 1, transition: { type: 'spring', stiffness: 300, damping: 25 } },
@@ -160,7 +259,7 @@ export default function QuizPlay() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-10 select-none">
       <AnimatePresence mode="wait">
         {gameState === 'intro' ? (
           /* Rules / Intro Screen */
@@ -187,8 +286,8 @@ export default function QuizPlay() {
               {quiz.description}
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-              <div className="glass-card p-4 rounded-2xl border border-slate-100 dark:border-slate-800/80">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+              <div className="glass-card p-4 rounded-2xl border border-slate-100 dark:border-slate-800/80 bg-white/40 dark:bg-dark-card/30">
                 <span className="text-[10px] uppercase tracking-wider text-slate-400 dark:text-dark-text-muted font-bold block mb-1">
                   Format
                 </span>
@@ -196,13 +295,26 @@ export default function QuizPlay() {
                   <HelpCircle className="w-4 h-4 text-violet-500" /> {quiz.totalQuestions} Questions
                 </span>
               </div>
-              <div className="glass-card p-4 rounded-2xl border border-slate-100 dark:border-slate-800/80">
+              <div className="glass-card p-4 rounded-2xl border border-slate-100 dark:border-slate-800/80 bg-white/40 dark:bg-dark-card/30">
                 <span className="text-[10px] uppercase tracking-wider text-slate-400 dark:text-dark-text-muted font-bold block mb-1">
                   Time Budget
                 </span>
                 <span className="text-sm font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
                   <BookOpen className="w-4 h-4 text-fuchsia-500" /> {quiz.timeLimit} seconds per question
                 </span>
+              </div>
+            </div>
+
+            {/* Anti-Cheating Secure Mode Warning Notice */}
+            <div className="bg-amber-50/50 dark:bg-amber-950/10 border border-amber-200/40 dark:border-amber-900/30 rounded-2xl p-5 mb-6 flex items-start gap-3">
+              <Shield className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5 animate-pulse" />
+              <div>
+                <h4 className="text-xs font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wide">
+                  Proctoring Notice: Secure Mode Enabled
+                </h4>
+                <p className="text-[11px] text-amber-700 dark:text-amber-500/80 mt-1 leading-relaxed">
+                  This quiz requires fullscreen access. Switching tabs, minimizing windows, clicking outside the screen, or opening browser developer consoles triggers security warnings. Reaching 3 warnings automatically terminates and saves your run.
+                </p>
               </div>
             </div>
 
@@ -214,17 +326,17 @@ export default function QuizPlay() {
               <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300 leading-relaxed list-disc list-inside">
                 <li>Only one option can be selected per question.</li>
                 <li>The <strong className="font-semibold text-slate-800 dark:text-slate-100">Next</strong> button unlocks only after making a selection.</li>
-                <li>If the timer reaches <strong className="font-bold text-rose-500">0 seconds</strong>, it automatically locks in an incorrect answer and moves forward.</li>
-                <li>You <strong className="font-semibold text-slate-800 dark:text-slate-100">cannot go back</strong> to previous questions once submitted or skipped.</li>
+                <li>If the timer reaches <strong className="font-bold text-rose-500">0 seconds</strong>, it automatically advances.</li>
+                <li>You <strong className="font-semibold text-slate-800 dark:text-slate-100">cannot go back</strong> to previous questions.</li>
               </ul>
             </div>
 
             <button
-              onClick={() => { setGameState('playing'); setStartTime(Date.now()); }}
+              onClick={handleStartQuiz}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-8 rounded-2xl bg-gradient-to-tr from-violet-600 to-fuchsia-600 text-white font-bold text-sm shadow-lg shadow-violet-500/20 hover:scale-[1.02] active:scale-98 transition-all hover:brightness-105 cursor-pointer"
             >
               <Play className="w-4 h-4 fill-white" />
-              <span>Start Challenge</span>
+              <span>Start Monitored Quiz</span>
             </button>
           </motion.div>
         ) : (
@@ -244,9 +356,17 @@ export default function QuizPlay() {
                   <h2 className="text-base font-bold text-slate-800 dark:text-slate-200 leading-tight">
                     {quiz.title}
                   </h2>
-                  <span className="text-[10px] text-slate-400 dark:text-dark-text-muted font-bold uppercase tracking-wider">
-                    {quiz.category} • {quiz.difficulty}
-                  </span>
+                  <div className="flex items-center gap-2 mt-1.5">
+                    <span className="text-[9px] font-black uppercase bg-violet-100 text-violet-700 dark:bg-violet-950/20 dark:text-violet-400 border border-violet-200/20 px-2 py-0.5 rounded-full">
+                      {quiz.category}
+                    </span>
+                    <span className="text-[9px] font-black uppercase bg-rose-50 text-rose-700 dark:bg-rose-950/20 dark:text-rose-400 border border-rose-200/20 px-2 py-0.5 rounded-full flex items-center gap-1">
+                      <Lock className="w-2.5 h-2.5" /> Proctor Active
+                    </span>
+                    <span className="text-[9px] font-black uppercase bg-amber-50 text-amber-700 dark:bg-amber-950/20 dark:text-amber-400 border border-amber-200/20 px-2 py-0.5 rounded-full">
+                      Warnings left: {warningsRemaining}
+                    </span>
+                  </div>
                 </div>
                 
                 {/* Countdown Timer */}
@@ -336,6 +456,14 @@ export default function QuizPlay() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Proctor Violation Modal Alert popup overlay */}
+      <SecureQuizWarning 
+        isOpen={isWarningOpen}
+        reason={activeViolationReason}
+        warningsRemaining={warningsRemaining}
+        onResume={handleResumeQuiz}
+      />
     </div>
   );
 }
