@@ -1,0 +1,714 @@
+{
+  "quizzes": [
+    {
+      "id": "quiz_1",
+      "title": "General Knowledge",
+      "description": "Test your basic general knowledge with this fun and quick trivia quiz covering geography, science, and world culture.",
+      "thumbnail": "quiz_1",
+      "category": "General Knowledge",
+      "difficulty": "Easy",
+      "timePerQuestion": 15,
+      "totalQuestions": 10,
+      "questions": [
+        {
+          "id": "quiz_1_q1",
+          "question": "Capital of India?",
+          "options": [
+            "Delhi",
+            "Mumbai",
+            "Pune",
+            "Jaipur"
+          ],
+          "correctAnswer": "Delhi",
+          "points": 10,
+          "explanation": "New Delhi is the official capital of the Republic of India."
+        },
+        {
+          "id": "quiz_1_q2",
+          "question": "Largest planet in our solar system?",
+          "options": [
+            "Earth",
+            "Mars",
+            "Jupiter",
+            "Venus"
+          ],
+          "correctAnswer": "Jupiter",
+          "points": 10,
+          "explanation": "Jupiter is the largest planet in our solar system, with a mass more than two and a half times that of all the other planets combined."
+        },
+        {
+          "id": "quiz_1_q3",
+          "question": "Which is the fastest land animal?",
+          "options": [
+            "Tiger",
+            "Leopard",
+            "Cheetah",
+            "Lion"
+          ],
+          "correctAnswer": "Cheetah",
+          "points": 10,
+          "explanation": "The cheetah is the fastest land mammal, capable of reaching speeds up to 70 miles per hour (112 km/h) in short bursts."
+        },
+        {
+          "id": "quiz_1_q4",
+          "question": "Which is the largest ocean on Earth?",
+          "options": [
+            "Atlantic",
+            "Indian",
+            "Pacific",
+            "Arctic"
+          ],
+          "correctAnswer": "Pacific",
+          "points": 10,
+          "explanation": "The Pacific Ocean is the largest and deepest of Earth's oceanic divisions, extending from the Arctic Ocean in the north to the Southern Ocean in the south."
+        },
+        {
+          "id": "quiz_1_q5",
+          "question": "What is the official currency of Japan?",
+          "options": [
+            "Yen",
+            "Won",
+            "Dollar",
+            "Euro"
+          ],
+          "correctAnswer": "Yen",
+          "points": 10,
+          "explanation": "The Yen is the official currency of Japan. It is the third most traded currency in the foreign exchange market."
+        },
+        {
+          "id": "quiz_1_q6",
+          "question": "Mount Everest is located in which country?",
+          "options": [
+            "India",
+            "Nepal",
+            "China",
+            "Bhutan"
+          ],
+          "correctAnswer": "Nepal",
+          "points": 10,
+          "explanation": "Mount Everest, the earth's highest mountain above sea level, is located in the Himalayas on the border between Nepal and China (Tibet region)."
+        },
+        {
+          "id": "quiz_1_q7",
+          "question": "How many continents are there on Earth?",
+          "options": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "correctAnswer": "7",
+          "points": 10,
+          "explanation": "Earth is divided into seven major continents: Asia, Africa, North America, South America, Antarctica, Europe, and Australia."
+        },
+        {
+          "id": "quiz_1_q8",
+          "question": "H2O is the chemical formula for?",
+          "options": [
+            "Salt",
+            "Water",
+            "Oxygen",
+            "Hydrogen"
+          ],
+          "correctAnswer": "Water",
+          "points": 10,
+          "explanation": "H2O consists of two hydrogen atoms covalently bonded to a single oxygen atom, representing water."
+        },
+        {
+          "id": "quiz_1_q9",
+          "question": "What is the national animal of India?",
+          "options": [
+            "Tiger",
+            "Lion",
+            "Elephant",
+            "Peacock"
+          ],
+          "correctAnswer": "Tiger",
+          "points": 10,
+          "explanation": "The Royal Bengal Tiger is the national animal of India, symbolizing power, strength, and agility."
+        },
+        {
+          "id": "quiz_1_q10",
+          "question": "In which direction does the Sun rise?",
+          "options": [
+            "North",
+            "South",
+            "East",
+            "West"
+          ],
+          "correctAnswer": "East",
+          "points": 10,
+          "explanation": "The Sun rises in the east and sets in the west because the Earth rotates on its axis from west to east."
+        }
+      ]
+    },
+    {
+      "id": "quiz_2",
+      "title": "React.js Basics",
+      "description": "Test your fundamentals of React.js, including hooks, JSX syntax, state management, props, and standard build tools.",
+      "thumbnail": "quiz_2",
+      "category": "Programming",
+      "difficulty": "Medium",
+      "timePerQuestion": 20,
+      "totalQuestions": 10,
+      "questions": [
+        {
+          "id": "quiz_2_q1",
+          "question": "React is primarily maintained by which company?",
+          "options": [
+            "Google",
+            "Meta",
+            "Microsoft",
+            "Amazon"
+          ],
+          "correctAnswer": "Meta",
+          "points": 10,
+          "explanation": "React was created by Jordan Walke, a software engineer at Meta (formerly Facebook), and is maintained by Meta and a community of developers."
+        },
+        {
+          "id": "quiz_2_q2",
+          "question": "Which React hook is used to manage local state in a functional component?",
+          "options": [
+            "useRef",
+            "useState",
+            "useMemo",
+            "useEffect"
+          ],
+          "correctAnswer": "useState",
+          "points": 10,
+          "explanation": "useState is a Hook that lets you add React state to functional components."
+        },
+        {
+          "id": "quiz_2_q3",
+          "question": "What does JSX stand for in React?",
+          "options": [
+            "Java XML",
+            "JavaScript XML",
+            "JSON XML",
+            "Java Syntax XML"
+          ],
+          "correctAnswer": "JavaScript XML",
+          "points": 10,
+          "explanation": "JSX stands for JavaScript XML. It allows us to write HTML elements in JavaScript and place them in the DOM without any createElement() methods."
+        },
+        {
+          "id": "quiz_2_q4",
+          "question": "What is the default file extension used for React component files containing JSX?",
+          "options": [
+            ".jsx",
+            ".java",
+            ".ts",
+            ".vue"
+          ],
+          "correctAnswer": ".jsx",
+          "points": 10,
+          "explanation": "The .jsx extension is typically used to distinguish files containing JavaScript XML from standard .js files."
+        },
+        {
+          "id": "quiz_2_q5",
+          "question": "Which library is the standard choice for handling navigation and routing in React?",
+          "options": [
+            "React Router",
+            "Express",
+            "Redux",
+            "Axios"
+          ],
+          "correctAnswer": "React Router",
+          "points": 10,
+          "explanation": "React Router is a fully-featured routing library for React, enabling single-page applications with dynamic, client-side routing."
+        },
+        {
+          "id": "quiz_2_q6",
+          "question": "What is the primary purpose of the Virtual DOM in React?",
+          "options": [
+            "Styling",
+            "Performance",
+            "Database",
+            "Hosting"
+          ],
+          "correctAnswer": "Performance",
+          "points": 10,
+          "explanation": "The Virtual DOM allows React to calculate minimal, highly optimized updates to the real DOM, boosting rendering speed and application performance."
+        },
+        {
+          "id": "quiz_2_q7",
+          "question": "In React, component state should be treated as:",
+          "options": [
+            "Mutated",
+            "Immutable",
+            "Deleted",
+            "Global"
+          ],
+          "correctAnswer": "Immutable",
+          "points": 10,
+          "explanation": "React state should be treated as immutable. Mutating state directly can lead to unexpected UI rendering bugs and prevents proper state tracking."
+        },
+        {
+          "id": "quiz_2_q8",
+          "question": "Which Hook is designed for handling side effects (such as fetching data or subscribing to events)?",
+          "options": [
+            "useEffect",
+            "useRef",
+            "useState",
+            "useId"
+          ],
+          "correctAnswer": "useEffect",
+          "points": 10,
+          "explanation": "The useEffect Hook lets you perform side effects (data fetching, subscriptions, DOM manual changes) in functional components."
+        },
+        {
+          "id": "quiz_2_q9",
+          "question": "Props passed to a React component are:",
+          "options": [
+            "Mutable",
+            "Read-only",
+            "Database",
+            "CSS"
+          ],
+          "correctAnswer": "Read-only",
+          "points": 10,
+          "explanation": "Props are read-only (immutable) inputs to a component, ensuring a predictable unidirectional data flow from parent to child."
+        },
+        {
+          "id": "quiz_2_q10",
+          "question": "Which modern, ultra-fast build tool is commonly used to scaffold React apps instead of webpack?",
+          "options": [
+            "Vite",
+            "MySQL",
+            "Firebase",
+            "Docker"
+          ],
+          "correctAnswer": "Vite",
+          "points": 10,
+          "explanation": "Vite is a modern build tool that provides a faster and leaner development experience for modern web projects."
+        }
+      ]
+    },
+    {
+      "id": "quiz_3",
+      "title": "Movies & Entertainment",
+      "description": "Dive into the world of cinema, wizarding worlds, and super heroes with this entertaining movies and media quiz.",
+      "thumbnail": "quiz_3",
+      "category": "Entertainment",
+      "difficulty": "Easy",
+      "timePerQuestion": 15,
+      "totalQuestions": 10,
+      "questions": [
+        {
+          "id": "quiz_3_q1",
+          "question": "Iron Man belongs to which fictional universe?",
+          "options": [
+            "DC",
+            "Marvel",
+            "Pixar",
+            "Sony"
+          ],
+          "correctAnswer": "Marvel",
+          "points": 10,
+          "explanation": "Iron Man is a key character created by Stan Lee under Marvel Comics, appearing in their comic books and the Marvel Cinematic Universe."
+        },
+        {
+          "id": "quiz_3_q2",
+          "question": "Who directed the blockbuster movie 'Avatar'?",
+          "options": [
+            "James Cameron",
+            "Nolan",
+            "Spielberg",
+            "Scott"
+          ],
+          "correctAnswer": "James Cameron",
+          "points": 10,
+          "explanation": "Avatar was written, directed, and co-produced by James Cameron, known also for Titanic and Aliens."
+        },
+        {
+          "id": "quiz_3_q3",
+          "question": "Who is the author of the Harry Potter book series?",
+          "options": [
+            "Rowling",
+            "Tolkien",
+            "Lewis",
+            "Martin"
+          ],
+          "correctAnswer": "Rowling",
+          "points": 10,
+          "explanation": "J.K. Rowling wrote the seven-book Harry Potter fantasy series published between 1997 and 2007."
+        },
+        {
+          "id": "quiz_3_q4",
+          "question": "Who is the creator of the Sherlock Holmes detective character?",
+          "options": [
+            "Conan Doyle",
+            "Agatha",
+            "Dickens",
+            "Twain"
+          ],
+          "correctAnswer": "Conan Doyle",
+          "points": 10,
+          "explanation": "Sir Arthur Conan Doyle was the British writer who created the renowned detective Sherlock Holmes in 1887."
+        },
+        {
+          "id": "quiz_3_q5",
+          "question": "The famous Oscar Awards are presented for excellence in which field?",
+          "options": [
+            "Sports",
+            "Movies",
+            "Music",
+            "Science"
+          ],
+          "correctAnswer": "Movies",
+          "points": 10,
+          "explanation": "The Academy Awards (famously known as the Oscars) are international awards given for artistic and technical merit in the film industry."
+        },
+        {
+          "id": "quiz_3_q6",
+          "question": "Which movie features the ice queen character Elsa?",
+          "options": [
+            "Moana",
+            "Frozen",
+            "Coco",
+            "Brave"
+          ],
+          "correctAnswer": "Frozen",
+          "points": 10,
+          "explanation": "Elsa, the Snow Queen of Arendelle, is a main character in Disney's hit animated feature Frozen."
+        },
+        {
+          "id": "quiz_3_q7",
+          "question": "Batman is the protector of which fictional city?",
+          "options": [
+            "Metropolis",
+            "Gotham",
+            "Central",
+            "Star"
+          ],
+          "correctAnswer": "Gotham",
+          "points": 10,
+          "explanation": "Gotham City is the fictional American city best known as the home of Batman in DC Comics."
+        },
+        {
+          "id": "quiz_3_q8",
+          "question": "What main subject does Hogwarts School teach?",
+          "options": [
+            "Cooking",
+            "Magic",
+            "Science",
+            "History"
+          ],
+          "correctAnswer": "Magic",
+          "points": 10,
+          "explanation": "Hogwarts School of Witchcraft and Wizardry is the fictional boarding school for young wizards in Harry Potter."
+        },
+        {
+          "id": "quiz_3_q9",
+          "question": "In which movie did the Minions first appear?",
+          "options": [
+            "Cars",
+            "Despicable Me",
+            "Up",
+            "Shrek"
+          ],
+          "correctAnswer": "Despicable Me",
+          "points": 10,
+          "explanation": "Minions first appeared as sidekick characters in the 2010 computer-animated comedy film Despicable Me."
+        },
+        {
+          "id": "quiz_3_q10",
+          "question": "The Joker is the iconic archenemy of which superhero?",
+          "options": [
+            "Spider-Man",
+            "Batman",
+            "Iron Man",
+            "Thor"
+          ],
+          "correctAnswer": "Batman",
+          "points": 10,
+          "explanation": "The Joker was introduced in Batman #1 (1940) as a maniacal criminal mastermind and Batman's greatest adversary."
+        }
+      ]
+    },
+    {
+      "id": "quiz_4",
+      "title": "Science",
+      "description": "Challenge yourself with a hard-level science quiz covering chemistry, astronomy, anatomy, physics, and plant biology.",
+      "thumbnail": "quiz_4",
+      "category": "Science",
+      "difficulty": "Hard",
+      "timePerQuestion": 25,
+      "totalQuestions": 10,
+      "questions": [
+        {
+          "id": "quiz_4_q1",
+          "question": "What is the chemical symbol of Gold?",
+          "options": [
+            "Go",
+            "Au",
+            "Ag",
+            "Gd"
+          ],
+          "correctAnswer": "Au",
+          "points": 10,
+          "explanation": "Au is derived from 'aurum', the Latin word for gold, which translates to 'shining dawn'."
+        },
+        {
+          "id": "quiz_4_q2",
+          "question": "Which is the nearest star to Earth?",
+          "options": [
+            "Sirius",
+            "Sun",
+            "Polaris",
+            "Alpha"
+          ],
+          "correctAnswer": "Sun",
+          "points": 10,
+          "explanation": "The Sun is the closest star to Earth, located at an average distance of about 93 million miles (150 million km)."
+        },
+        {
+          "id": "quiz_4_q3",
+          "question": "How many chambers are there in a human heart?",
+          "options": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "correctAnswer": "4",
+          "points": 10,
+          "explanation": "The human heart has four chambers: the right atrium, the left atrium, the right ventricle, and the left ventricle."
+        },
+        {
+          "id": "quiz_4_q4",
+          "question": "Which gas do plants primarily absorb during photosynthesis?",
+          "options": [
+            "Oxygen",
+            "Nitrogen",
+            "CO2",
+            "Hydrogen"
+          ],
+          "correctAnswer": "CO2",
+          "points": 10,
+          "explanation": "Plants take in Carbon Dioxide (CO2) from the air and release Oxygen (O2) as a byproduct during photosynthesis."
+        },
+        {
+          "id": "quiz_4_q5",
+          "question": "What is the SI unit for the speed of light?",
+          "options": [
+            "km/h",
+            "m/s",
+            "mph",
+            "fps"
+          ],
+          "correctAnswer": "m/s",
+          "points": 10,
+          "explanation": "The SI unit for speed or velocity is meters per second (m/s). The speed of light in a vacuum is exactly 299,792,458 m/s."
+        },
+        {
+          "id": "quiz_4_q6",
+          "question": "The name DNA starts with which full form term?",
+          "options": [
+            "Dynamic",
+            "Deoxyribo",
+            "Digital",
+            "Dual"
+          ],
+          "correctAnswer": "Deoxyribo",
+          "points": 10,
+          "explanation": "DNA stands for Deoxyribonucleic Acid, a molecule that carries the genetic instructions for all living organisms."
+        },
+        {
+          "id": "quiz_4_q7",
+          "question": "What is the boiling point of pure water at sea level?",
+          "options": [
+            "50°C",
+            "100°C",
+            "120°C",
+            "90°C"
+          ],
+          "correctAnswer": "100°C",
+          "points": 10,
+          "explanation": "Water boils at 100°C (212°F) under standard atmospheric pressure at sea level."
+        },
+        {
+          "id": "quiz_4_q8",
+          "question": "Which planet is commonly known as the Red Planet?",
+          "options": [
+            "Mars",
+            "Venus",
+            "Mercury",
+            "Saturn"
+          ],
+          "correctAnswer": "Mars",
+          "points": 10,
+          "explanation": "Mars is called the Red Planet because iron minerals in its soil oxidize (or rust), causing the soil and atmosphere to look red."
+        },
+        {
+          "id": "quiz_4_q9",
+          "question": "Which is the largest organ in the human body?",
+          "options": [
+            "Heart",
+            "Skin",
+            "Liver",
+            "Brain"
+          ],
+          "correctAnswer": "Skin",
+          "points": 10,
+          "explanation": "The skin is the body's largest organ, covering its entire external surface and accounting for about 16% of body weight."
+        },
+        {
+          "id": "quiz_4_q10",
+          "question": "What is the SI unit of electric current?",
+          "options": [
+            "Volt",
+            "Watt",
+            "Ampere",
+            "Ohm"
+          ],
+          "correctAnswer": "Ampere",
+          "points": 10,
+          "explanation": "The ampere, often shortened to amp, is the base unit of electric current in the International System of Units (SI)."
+        }
+      ]
+    },
+    {
+      "id": "quiz_5",
+      "title": "Sports",
+      "description": "Test your sports expertise in soccer, tennis, basketball, chess, and traditional games like kabaddi.",
+      "thumbnail": "quiz_5",
+      "category": "Sports",
+      "difficulty": "Medium",
+      "timePerQuestion": 15,
+      "totalQuestions": 10,
+      "questions": [
+        {
+          "id": "quiz_5_q1",
+          "question": "How many players are on the field for one football (soccer) team?",
+          "options": [
+            "9",
+            "10",
+            "11",
+            "12"
+          ],
+          "correctAnswer": "11",
+          "points": 10,
+          "explanation": "A football match is played by two teams, each containing a maximum of 11 players including the goalkeeper."
+        },
+        {
+          "id": "quiz_5_q2",
+          "question": "The Olympic Games are held every how many years?",
+          "options": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "correctAnswer": "4",
+          "points": 10,
+          "explanation": "The Olympic Games (both summer and winter) are held once every four years."
+        },
+        {
+          "id": "quiz_5_q3",
+          "question": "What wood is traditionally used to make professional cricket bats?",
+          "options": [
+            "Oak",
+            "Willow",
+            "Pine",
+            "Teak"
+          ],
+          "correctAnswer": "Willow",
+          "points": 10,
+          "explanation": "Cricket bats are traditionally carved out of willow wood, specifically English Willow (Salix alba var. caerulea)."
+        },
+        {
+          "id": "quiz_5_q4",
+          "question": "Which sport is played in the NBA?",
+          "options": [
+            "Football",
+            "Basketball",
+            "Baseball",
+            "Hockey"
+          ],
+          "correctAnswer": "Basketball",
+          "points": 10,
+          "explanation": "The National Basketball Association (NBA) is a professional basketball league in North America."
+        },
+        {
+          "id": "quiz_5_q5",
+          "question": "Which Tennis Grand Slam tournament is played in the UK?",
+          "options": [
+            "US Open",
+            "French",
+            "Wimbledon",
+            "Australian"
+          ],
+          "correctAnswer": "Wimbledon",
+          "points": 10,
+          "explanation": "Wimbledon is the oldest tennis tournament in the world, held at the All England Club in London, UK since 1877."
+        },
+        {
+          "id": "quiz_5_q6",
+          "question": "How many total chess pieces does each side start with in a game of chess?",
+          "options": [
+            "14",
+            "15",
+            "16",
+            "17"
+          ],
+          "correctAnswer": "16",
+          "points": 10,
+          "explanation": "Each player starts the game with 16 pieces: 8 pawns, 2 rooks, 2 knights, 2 bishops, 1 queen, and 1 king."
+        },
+        {
+          "id": "quiz_5_q7",
+          "question": "What is the badminton shuttlecock commonly called?",
+          "options": [
+            "Birdie",
+            "Ball",
+            "Puck",
+            "Disc"
+          ],
+          "correctAnswer": "Birdie",
+          "points": 10,
+          "explanation": "A badminton shuttlecock is colloquially referred to as a 'birdie' due to it being made of feathers and flying like a bird."
+        },
+        {
+          "id": "quiz_5_q8",
+          "question": "How many players are on court for each team during a Kabaddi match?",
+          "options": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "correctAnswer": "7",
+          "points": 10,
+          "explanation": "In standard Kabaddi, each team has 7 players on the court at any one time during play."
+        },
+        {
+          "id": "quiz_5_q9",
+          "question": "Which sport features the FIFA World Cup?",
+          "options": [
+            "Cricket",
+            "Football",
+            "Rugby",
+            "Tennis"
+          ],
+          "correctAnswer": "Football",
+          "points": 10,
+          "explanation": "The FIFA World Cup is the premier international association football (soccer) competition."
+        },
+        {
+          "id": "quiz_5_q10",
+          "question": "Which format of cricket generally yields the highest total runs in a match?",
+          "options": [
+            "Test",
+            "ODI",
+            "T20",
+            "All"
+          ],
+          "correctAnswer": "Test",
+          "points": 10,
+          "explanation": "Test cricket is played over five days, allowing teams multiple innings to compile very high run totals (often exceeding 1,000 runs combined)."
+        }
+      ]
+    }
+  ]
+}

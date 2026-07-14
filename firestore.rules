@@ -1,0 +1,45 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if the authenticated user has an 'admin' role in Firestore
+    function isAdmin() {
+      return request.auth != null && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // Quizzes: Publicly readable; client app writes are restricted to Administrators only.
+    match /quizzes/{quizId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+    // Users: Authenticated players can read and edit only their own document.
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      
+      // History subcollection: Locked down to the matching account owner.
+      match /history/{attemptId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+      
+      // Favorites subcollection: Locked down to the matching account owner.
+      match /favorites/{favId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+    
+    // Leaderboard: Public reads, creation allowed for authenticated players, updates/deletions restricted to Admins.
+    match /leaderboard/{scoreId} {
+      allow read: if true;
+      allow create: if request.auth != null &&
+                    request.resource.data.name is string &&
+                    request.resource.data.name.size() >= 2 &&
+                    request.resource.data.quizId is string &&
+                    request.resource.data.score is number &&
+                    request.resource.data.percentage is number &&
+                    request.resource.data.completedAt == request.time;
+      allow update, delete: if isAdmin();
+    }
+  }
+}
