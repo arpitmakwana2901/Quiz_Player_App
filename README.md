@@ -1,322 +1,155 @@
-# 🧠 BrainQuest - Interactive Quiz Player
+# 🧠 BrainQuest - Quiz Player
 
-BrainQuest is a responsive Quiz Player built with **React (Vite)** that allows users to play quizzes, view their results, and save their scores to a Firebase Firestore leaderboard.
+## 📌 Project Overview
 
-The project is designed with a clean UI, smooth user experience, and Firebase integration for storing leaderboard data.
-
----
-
-# 🚀 Tech Stack
-
-* React.js (Vite)
-* React Router DOM
-* Tailwind CSS
-* Firebase Firestore
-* Framer Motion (for animations)
+BrainQuest is a responsive Quiz Player application built using React.js (Vite) and Firebase. Users can register, log in, play quizzes, view their results, and compete on a real-time leaderboard.
 
 ---
 
-# ✨ Features
+# 🚀 Project Flow
 
-* Browse available quizzes
-* Play quizzes with multiple-choice questions
-* Instant answer validation
-* Quiz timer
-* Progress indicator
-* Score calculation
-* Percentage calculation
-* Review all questions after quiz completion
-* Save score to Firebase Firestore
-* Top 10 leaderboard for each quiz
-* Responsive design for desktop and mobile
+### 1. User Authentication
+- Register using Email & Password
+- Login using Firebase Authentication
+- Email Verification
+- Protected Routes
 
----
+### 2. Home Page
+- Display all available quizzes
+- Category Filter
+- Quiz Details
+- Difficulty Level
+- Time per Question
 
-# 📁 Project Structure
+### 3. Play Quiz
+- Timer for each question
+- Progress Bar
+- One answer selection
+- Auto Next when timer ends
+- Next button enabled only after selecting an answer
 
-```text
-src
-│
-├── components
-├── pages
-├── firebase
-│     ├── config.js
-│     └── leaderboard.js
-│
-├── data
-├── hooks
-├── utils
-├── assets
-└── App.jsx
-```
+### 4. Quiz Result
+- Total Score
+- Correct Answers
+- Wrong Answers
+- Percentage
+- Performance Message
 
----
+### 5. Leaderboard
+- Save score to Firebase Firestore
+- Display Top 10 Scores
+- Sort by Highest Score
+- Latest completion time
 
-# 🔥 Firebase Integration
+### 6. User Profile
+- User Information
+- Quiz History
+- Recently Played Quizzes
+- Favorite Quizzes
+- Highest Score
+- Average Score
 
-The project uses **Firebase Firestore** for storing leaderboard data.
+### 7. Admin Panel
+- Add Quiz
+- Edit Quiz
+- Delete Quiz
+- Manage Quiz Categories
 
-### Firestore Collections
-
-## quizzes
-
-Stores quiz information and questions.
-
-```text
-quizzes
-   ├── quiz_1
-   ├── quiz_2
-   ├── quiz_3
-   └── ...
-```
-
-Each quiz document contains:
-
-* id
-* title
-* description
-* questions
-* options
-* correctAnswer
-* explanation
-* points
+### 8. Additional Features
+- Dark / Light Mode
+- Responsive Design
+- React Toastify Notifications
+- Lazy Loading
+- Error Boundary
+- Progressive Web App (PWA)
+- Secure Quiz Mode (Anti-Cheating)
 
 ---
 
-## leaderboard
+# 🛠 Tech Stack
 
-Stores user scores.
-
-```text
-leaderboard
-
-   ├── document1
-
-   ├── document2
-
-   └── ...
-```
-
-Each document contains:
-
-* name
-* quizId
-* quizTitle
-* score
-* percentage
-* completedAt
-
----
-
-# 📊 Leaderboard Logic
-
-After completing a quiz:
-
-1. User enters their name.
-2. Score is calculated.
-3. Percentage is calculated.
-4. Data is stored in Firestore.
-5. Top 10 scores are fetched for the selected quiz.
-6. Results are sorted by:
-
-   * Highest score (Descending)
-   * Latest completion time (Descending)
-
----
+- React.js (Vite)
+- React Router DOM
+- Tailwind CSS
+- Firebase Authentication
+- Firebase Firestore
+- Framer Motion
+- React Toastify
+- Lucide React
 
 # ⚙️ Installation
 
-Clone the repository
+## Clone Repository
 
-```bash
 git clone <repository-url>
-```
 
-Install dependencies
+## Install Dependencies
 
-```bash
 npm install
-```
 
-Run development server
+## Run Project
 
-```bash
 npm run dev
-```
 
-Build production version
+## Production Build
 
-```bash
 npm run build
-```
+npm run preview
+
+# 🔥 AI Tools Used
+
+- ChatGPT
+- Antigravity AI
 
 ---
 
-# 🔐 Environment Variables
+# 🤖 Where AI Helped
 
-Create a `.env` file in the project root.
+AI was used as a development assistant for:
 
-```env
-VITE_FIREBASE_API_KEY=
-VITE_FIREBASE_AUTH_DOMAIN=
-VITE_FIREBASE_PROJECT_ID=
-VITE_FIREBASE_STORAGE_BUCKET=
-VITE_FIREBASE_MESSAGING_SENDER_ID=
-VITE_FIREBASE_APP_ID=
-```
+- Planning project architecture
+- Firebase configuration guidance
+- Firestore query optimization
+- React code suggestions
+- UI improvement ideas
+- Debugging runtime errors
+- Documentation support
 
----
-
-# 🔥 Firebase Setup
-
-## Step 1
-
-Create a Firebase Project.
+All generated code was reviewed, integrated, modified, and tested before being added to the project.
 
 ---
 
-## Step 2
+# 💻 What I Implemented Myself
 
-Enable Firestore Database.
-
----
-
-## Step 3
-
-Create a Web App.
-
----
-
-## Step 4
-
-Copy Firebase configuration into the `.env` file.
-
----
-
-## Step 5
-
-Set Firestore Rules during development.
-
-```javascript
-rules_version = '2';
-
-service cloud.firestore {
-  match /databases/{database}/documents {
-
-    match /{document=**} {
-      allow read, write: if true;
-    }
-
-  }
-}
-```
+- Integrated Firebase Authentication (Register, Login, Logout).
+- Connected Firebase Firestore with the application.
+- Migrated quiz data from local JSON to Firestore.
+- Implemented quiz timer, progress bar, score calculation, and result logic.
+- Implemented Firebase Leaderboard with Top 10 ranking.
+- Configured Firestore Composite Indexes and Security Rules.
+- Built User Profile, Quiz History, Recently Played, and Favorite Quizzes.
+- Implemented Admin Panel with Add, Edit, and Delete Quiz functionality.
+- Added Dark / Light Theme.
+- Integrated React Toastify notifications.
+- Added Lazy Loading and Error Boundary.
+- Converted the application into a Progressive Web App (PWA).
+- Implemented Secure Quiz Mode with tab switching detection, fullscreen monitoring, keyboard restrictions, copy protection, and automatic quiz submission after repeated violations.
+- Tested the complete application and fixed integration issues.
 
 ---
 
-## Step 6
+# 📌 Future Improvements
 
-Create Composite Index for Leaderboard Query.
-
-Collection
-
-```text
-leaderboard
-```
-
-Fields
-
-* quizId (Ascending)
-* score (Descending)
-* completedAt (Descending)
-
-This index is required for the leaderboard query that filters by quiz and sorts by score and completion time.
+- Multiplayer Quiz
+- AI Generated Questions
+- Certificate Generation
+- Analytics Dashboard
+- Social Login
 
 ---
 
-# 📈 Quiz Flow
-
-```text
-Home
-
-↓
-
-Quiz List
-
-↓
-
-Select Quiz
-
-↓
-
-Play Quiz
-
-↓
-
-Submit Answers
-
-↓
-
-Result Page
-
-↓
-
-Enter Name
-
-↓
-
-Save Score
-
-↓
-
-Firestore
-
-↓
-
-Top 10 Leaderboard
-```
-
----
-
-# 🎯 Current Functionality
-
-* Quiz listing
-* Quiz player
-* Timer
-* Progress tracking
-* Result calculation
-* Review answers
-* Firebase Firestore integration
-* Save leaderboard scores
-* Top 10 leaderboard
-* Responsive UI
-
----
-
-# 🚧 Future Improvements
-
-* User Authentication
-* Quiz Categories
-* Difficulty Levels
-* Search & Filter
-* Admin Dashboard
-* Quiz Creation Panel
-* Dark / Light Theme Toggle
-* User Profile
-* Analytics Dashboard
-
----
-
-# 👨‍💻 Developed By
+# 👨‍💻 Developer
 
 **Arpit Makwana**
 
 MERN Stack Developer
-
-* React.js
-* Node.js
-* Express.js
-* MongoDB
-* Firebase
-
-
----
